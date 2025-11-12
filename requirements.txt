@@ -1,0 +1,14 @@
+# Core HF stack
+transformers>=4.44
+peft>=0.12
+accelerate>=0.33
+datasets>=3.0
+evaluate>=0.4
+huggingface_hub>=0.24
+
+# Metrics / data wrangling
+scikit-learn>=1.4
+pandas>=2.2
+numpy>=1.26
+tqdm>=4.66
+pyyaml>=6.0
