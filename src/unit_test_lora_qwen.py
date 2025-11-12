@@ -189,21 +189,7 @@ def main():
     t0 = time.time()
     trainer.train()
     secs = time.time() - t0
-
-    # === tuned inference on tiny test ===
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    model.eval().to(device)
-    preds = [generate_one(model, tok, p) for p in te_prompts]
-
-    macro = f1_score(te_gold, preds, average="macro")
-    micro = f1_score(te_gold, preds, average="micro")
-    report = {"macro_f1": float(macro), "micro_f1": float(micro), "n": len(preds), "train_seconds": round(secs, 2)}
-    print("[UNIT] Tuned F1s (tiny split):", report)
-
-    (out_dir/"unit_metrics.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-    with (out_dir/"unit_preds.jsonl").open("w", encoding="utf-8") as f:
-        for yhat, y in zip(preds, te_gold):
-            f.write(json.dumps({"pred": yhat, "gold": y}, ensure_ascii=False) + "\n")
+    print(f"[TRAIN] Done in {secs:.1f}s. Saving to {out_dir}")
 
     trainer.save_model(str(out_dir))
     tok.save_pretrained(str(out_dir))
