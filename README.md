@@ -60,7 +60,7 @@ Labels normalized to `{left, center, right}`.
 - `eval_small.jsonl`: 15 unlabeled examples sampled from `test.jsonl` for qualitative inspection
 - `prep_meta.json`: metadata on counts, label balance, and any train downsampling
 
-Note: To keep training time reasonable, this run uses `--train_cap 1200`. The cap is applied **after** creating stratified splits across three labels, so it reduces **train only**. Validation and test stay at their full split sizes and do not overlap with train (**val = 1,382**, **test = 1,625**; full dataset size = **10,832**).
+Note: To keep training time reasonable, this run uses `--train_cap 1200`. The cap is applied **after** creating stratified splits across three labels, so it reduces **train only**. Validation and test stay at their full split sizes and do not overlap with train (**val = 1,382**, **test = 1,625**; full dataset size = **10,832**). This also ensure that the exact test questions were not used during fine-tuning.
 
 ---
 
@@ -263,7 +263,7 @@ Inside the container, follow the same commands as above.
 
 ### (1)Sample outputs (qualitative)
 
-See the small preview table from eval_compare.csv and preview below.
+See the small preview table from eval_compare.csv below, which contains the comparison between model outputs and groundtruth data.
 These rows show cases where the tuned model corrects the base model’s mistakes, especially on clearly partisan pieces. Center remains trickier in some borderline or wire-style articles.
 
 | article (preview 50 words)                                                                                                                                                                                                                                                                                  | gold   | base_pred   | tuned_pred   |
