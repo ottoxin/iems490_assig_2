@@ -1,0 +1,56 @@
+{
+  "n_before_filter": 10832,
+  "n_after_filter": 10832,
+  "stratified": true,
+  "pre_split": {
+    "train": 7825,
+    "val": 1382,
+    "test": 1625,
+    "train_label_counts": {
+      "left": 3526,
+      "right": 3231,
+      "center": 1068
+    },
+    "val_label_counts": {
+      "left": 623,
+      "right": 571,
+      "center": 188
+    },
+    "test_label_counts": {
+      "left": 732,
+      "right": 671,
+      "center": 222
+    }
+  },
+  "post_split": {
+    "train": 60,
+    "val": 1382,
+    "test": 1625,
+    "train_label_counts": {
+      "center": 20,
+      "left": 20,
+      "right": 20
+    },
+    "val_label_counts": {
+      "left": 623,
+      "right": 571,
+      "center": 188
+    },
+    "test_label_counts": {
+      "left": 732,
+      "right": 671,
+      "center": 222
+    }
+  },
+  "downsample": {
+    "applied": true,
+    "scheme": "per_label_cap",
+    "params": {
+      "train_cap_per_label": 20
+    }
+  },
+  "columns_used": {
+    "label": "bias",
+    "text": "page_text"
+  }
+}
