@@ -25,7 +25,7 @@ iems490-assig-2/
 │  └─ lora_qwen3_0p6b_unit.yaml
 ├─ data/
 │  ├─ bias_clean.csv              # original full dataset
-│  ├─ processed_unit_test/        # very small data for unit test
+│  ├─ processed_unit_test/        # very small data for unit test; same files as below.
 │  └─ processed/                  # this run: TRAIN capped to 1,200 (stratified after split); VAL = 1,382 and TEST = 1,625 (each ~15% of 10,832)
 │     ├─ train.jsonl
 │     ├─ val.jsonl
@@ -223,11 +223,10 @@ Example `outputs/tuned_test_preds.jsonl`:
 Runs a tiny end-to-end check in under 10 minutes.
 
 ```bash
-python src/unit_test_lora_qwen.py \
+python src/train_only_lora_qwen.py \
   --config configs/lora_qwen3_0p6b_unit.yaml \
-  --data_dir data/processed \
-  --out_dir adapters/qwen3_0p6b_lora_unit \
-  --n_train 64 --n_val 32 --n_test 64
+  --data_dir data/processed_unit_test \
+  --out_dir adapters/unit_test_qwen3_0p6b_lora
 ```
 
 What it does:
@@ -235,7 +234,16 @@ What it does:
 * Takes small slices from the capped splits
 * Runs a short LoRA training
 * Runs tuned inference on the tiny test slice
-* Prints and saves macro-F1 and micro-F1
+
+Example output
+
+```bash
+trainable params: 2,293,760 || all params: 598,343,680 || trainable%: 0.3834
+{'loss': 3.2472, 'grad_norm': 0.645875096321106, 'learning_rate': 6.521739130434783e-05, 'epoch': 1.2666666666666666}
+{'loss': 3.1518, 'grad_norm': 0.5440749526023865, 'learning_rate': 2.173913043478261e-05, 'epoch': 2.533333333333333}
+{'train_runtime': 63.1531, 'train_samples_per_second': 2.85, 'train_steps_per_second': 0.38, 'train_loss': 3.1895077228546143, 'epoch': 3.0}
+[TRAIN] Done in 63.4s. Saving to adapters/unit_test_qwen3_0p6b_lora
+```
 
 ---
 
