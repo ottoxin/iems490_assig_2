@@ -223,7 +223,7 @@ Example `outputs/tuned_test_preds.jsonl`:
 Runs a tiny end-to-end check in under 10 minutes.
 
 ```bash
-python src/train_only_lora_qwen.py \
+python src/unit_test_lora_qwen.py \
   --config configs/lora_qwen3_0p6b_unit.yaml \
   --data_dir data/processed_unit_test \
   --out_dir adapters/unit_test_qwen3_0p6b_lora
@@ -267,7 +267,7 @@ Inside the container, follow the same commands as above.
 
 ```bash
 cd /workspace
-python src/train_only_lora_qwen.py \
+python src/unit_test_lora_qwen.py \
   --config configs/lora_qwen3_0p6b_unit.yaml \
   --data_dir data/processed_unit_test \
   --out_dir adapters/unit_test_qwen3_0p6b_lora
