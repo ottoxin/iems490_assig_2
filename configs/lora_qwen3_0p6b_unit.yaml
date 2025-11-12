@@ -8,6 +8,7 @@ lora_dropout: 0.05
 target_modules: [q_proj, k_proj, v_proj, o_proj]
 
 # Training (short)
+dataloader_num_workers: 0
 per_device_train_batch_size: 1
 per_device_eval_batch_size: 1
 gradient_accumulation_steps: 8
