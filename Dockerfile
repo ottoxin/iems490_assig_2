@@ -6,7 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     TRANSFORMERS_VERBOSITY=error \
     PYTORCH_CUDA_ALLOC_CONF=expandable_segments:true
 
-RUN apt-get update && apt-get install -y python3.10 python3-pip git git-lfs && \
+RUN apt-get update && apt-get install -y \
+    python3.10 python3-pip git git-lfs && \
     ln -s /usr/bin/python3.10 /usr/bin/python && \
     pip install --upgrade pip
 
@@ -24,5 +25,4 @@ COPY . /workspace
 
 RUN mkdir -p $HF_HOME && git lfs install
 
-# Default: show unit test help
-CMD ["python", "src/unit_test_lora_qwen.py", "--help"]
+# No default CMD (run commands from README)
