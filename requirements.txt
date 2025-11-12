@@ -1,7 +1,8 @@
 # Core HF stack
+accelerate>=1.0.1 
 transformers>=4.44
 peft>=0.12
-accelerate>=0.33
+accelerate>=1.0.1
 datasets>=3.0
 evaluate>=0.4
 huggingface_hub>=0.24
