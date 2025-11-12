@@ -266,6 +266,13 @@ docker run --gpus all -it --rm \
 
 Inside the container, follow the same commands as above.
 
+```bash
+cd /workspace
+python src/train_only_lora_qwen.py \
+  --config configs/lora_qwen3_0p6b_unit.yaml \
+  --data_dir data/processed_unit_test \
+  --out_dir adapters/unit_test_qwen3_0p6b_lora
+```
 ---
 
 ## Discussion
