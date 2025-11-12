@@ -231,9 +231,8 @@ python src/train_only_lora_qwen.py \
 
 What it does:
 
-* Takes small slices from the capped splits
+* Takes small training data
 * Runs a short LoRA training
-* Runs tuned inference on the tiny test slice
 
 Example output
 
