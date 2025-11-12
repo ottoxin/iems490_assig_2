@@ -25,6 +25,7 @@ iems490-assig-2/
 │  └─ lora_qwen3_0p6b_unit.yaml
 ├─ data/
 │  ├─ bias_clean.csv              # original full dataset
+│  ├─ processed_unit_test/        # very small data for unit test
 │  └─ processed/                  # this run: TRAIN capped to 1,200 (stratified after split); VAL = 1,382 and TEST = 1,625 (each ~15% of 10,832)
 │     ├─ train.jsonl
 │     ├─ val.jsonl
