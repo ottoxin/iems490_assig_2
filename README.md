@@ -64,6 +64,16 @@ Note: To keep training time reasonable, this run uses `--train_cap 1200`. The ca
 
 ---
 
+## Outputs folder
+
+`outputs/` starts empty with `.gitkeep`. The scripts will populate it as you run inference:
+
+* `base_eval.jsonl`, `base_metrics_test.json`
+* `tuned_eval.jsonl`, `tuned_test_preds.jsonl`, `tuned_metrics_test.json`
+* `eval_compare.csv` from the join step
+
+---
+
 ## Environment setup
 
 ```bash
@@ -173,8 +183,8 @@ Example `outputs/base_metrics_test.json`:
 Example `outputs/base_eval.jsonl`:
 
 ```json
-{"instruction":"Classify ...","input":"<truncated article...>","base_pred":"left"}
-{"instruction":"Classify ...","input":"<truncated article...>","base_pred":"right"}
+{"instruction":"Classify ...","input":"<article...>","base_pred":"left"}
+{"instruction":"Classify ...","input":"<article...>","base_pred":"right"}
 ```
 
 ### Tuned model
@@ -246,16 +256,6 @@ docker run --gpus all -it --rm \
 ```
 
 Inside the container, follow the same commands as above.
-
----
-
-## Outputs folder
-
-`outputs/` starts empty with `.gitkeep`. The scripts will populate it as you run inference:
-
-* `base_eval.jsonl`, `base_metrics_test.json`
-* `tuned_eval.jsonl`, `tuned_test_preds.jsonl`, `tuned_metrics_test.json`
-* `eval_compare.csv` from the join step
 
 ---
 
