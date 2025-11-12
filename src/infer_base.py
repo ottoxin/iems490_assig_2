@@ -37,8 +37,6 @@ def generate_one(model, tok, prompt: str, max_new_tokens: int):
         **ids,
         max_new_tokens=max_new_tokens,
         do_sample=False,
-        temperature=0.0,
-        top_p=1.0,
         pad_token_id=tok.eos_token_id,
     )
     txt = tok.decode(out[0], skip_special_tokens=True)
@@ -54,17 +52,16 @@ def main():
     ap.add_argument("--max_new_tokens", type=int, default=6)
     ap.add_argument("--seed", type=int, default=42)
 
-    # NEW: quick metrics on a small labeled subset of test.jsonl
+    # quick metrics on a small labeled subset of test.jsonl
     ap.add_argument("--quick_metrics_k", type=int, default=0,
-                    help="If >0, also evaluate on K samples from data/processed/test.jsonl and print/save metrics.")
+                    help="If >0, evaluate on K samples from test.jsonl and save F1s.")
     ap.add_argument("--test_jsonl", default="data/processed/test.jsonl",
-                    help="Path to test split for quick metrics (ignored if quick_metrics_k=0).")
+                    help="Path to test split for quick metrics.")
     ap.add_argument("--quick_metrics_out", default="outputs/base_metrics_quick.json",
                     help="Where to save quick metrics JSON.")
-
     args = ap.parse_args()
-    set_seed(args.seed)
 
+    set_seed(args.seed)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     dtype = torch.bfloat16 if torch.cuda.is_available() else None
 
@@ -74,7 +71,7 @@ def main():
         tok.pad_token = tok.eos_token
     model = AutoModelForCausalLM.from_pretrained(args.model_id, torch_dtype=dtype).to(device).eval()
 
-    # ---------- Qualitative small eval ----------
+    # qualitative small eval
     eval_path = Path(args.eval_jsonl)
     out_path  = Path(args.out_jsonl)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -92,9 +89,9 @@ def main():
             }, ensure_ascii=False) + "\n")
     print(f"[INFO] Wrote qualitative outputs → {out_path}")
 
-    # ---------- NEW: quick metrics (if requested) ----------
+    # quick F1 metrics (no accuracy)
     if args.quick_metrics_k and args.quick_metrics_k > 0:
-        from sklearn.metrics import accuracy_score, f1_score
+        from sklearn.metrics import f1_score
 
         test_path = Path(args.test_jsonl)
         test_examples = list(load_jsonl(test_path))
@@ -105,7 +102,7 @@ def main():
         k = min(args.quick_metrics_k, len(test_examples))
         random.shuffle(test_examples)
         test_examples = test_examples[:k]
-        print(f"[INFO] Quick metrics on {k} test samples")
+        print(f"[INFO] Quick F1s on {k} test samples")
 
         y_true, y_pred = [], []
         for ex in tqdm(test_examples, desc="Quick test"):
@@ -115,14 +112,14 @@ def main():
             y_true.append(ex["output"].strip().lower())
 
         report = {
-            "accuracy": float(accuracy_score(y_true, y_pred)),
             "macro_f1": float(f1_score(y_true, y_pred, average="macro")),
+            "micro_f1": float(f1_score(y_true, y_pred, average="micro")),
             "n": k,
         }
         qm_path = Path(args.quick_metrics_out)
         qm_path.parent.mkdir(parents=True, exist_ok=True)
         qm_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
-        print(f"[INFO] Quick baseline metrics → {qm_path}: {report}")
+        print(f"[INFO] Quick baseline F1s → {qm_path}: {report}")
 
 if __name__ == "__main__":
     main()
