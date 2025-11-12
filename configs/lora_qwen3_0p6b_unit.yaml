@@ -1,0 +1,30 @@
+seed: 42
+model_id: Qwen/Qwen3-0.6B
+
+# LoRA
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+# Training (short)
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-4
+num_train_epochs: 1
+weight_decay: 0.0
+warmup_ratio: 0.03
+logging_steps: 10
+eval_strategy: "steps"
+eval_steps: 40
+save_steps: 40
+early_stopping_patience: 1
+lr_scheduler_type: linear
+bf16: false
+fp16: true
+
+# Sequence and paths
+max_length: 384
+data_dir: data/processed
+output_dir: adapters/unit_test_qwen3_0p6b_lora
