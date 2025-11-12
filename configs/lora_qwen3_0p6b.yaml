@@ -8,26 +8,24 @@ lora_dropout: 0.05
 target_modules: [q_proj, k_proj, v_proj, o_proj]
 
 # Training
-per_device_train_batch_size: 2
-per_device_eval_batch_size: 2
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
 gradient_accumulation_steps: 8
-learning_rate: 1.0e-4           # ↓ a notch for stability
-num_train_epochs: 3              # give ES a chance (or set 5)
+learning_rate: 1.0e-4
+num_train_epochs: 5
 weight_decay: 0.0
-# either warmup_ratio or warmup_steps; pick one:
 warmup_ratio: 0.03
-logging_steps: 20
+logging_steps: 5
 eval_strategy: "steps"
-eval_steps: 100                  # more frequent evals
-save_steps: 100
-early_stopping_patience: 2       # new (read in the trainer)
-lr_scheduler_type: linear        # or "cosine"
-bf16: true
-fp16: false
+eval_steps: 200
+save_steps: 200
+early_stopping_patience: 2
+lr_scheduler_type: linear
+bf16: false
+fp16: true
 
-# NEW
-max_length: 1024
+max_length: 512   # bump to 768–1024 if VRAM allows
 
-# Paths
+# Paths (point to the 1.2k split)
 data_dir: data/processed
-output_dir: adapters/qwen3_0p6b_lora
+output_dir: adapters/qwen3_0p6b_lora_1p2k
