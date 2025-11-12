@@ -26,5 +26,5 @@ fp16: true
 
 # Sequence and paths
 max_length: 384
-data_dir: data/processed
+data_dir: data/processed_unit_test
 output_dir: adapters/unit_test_qwen3_0p6b_lora
