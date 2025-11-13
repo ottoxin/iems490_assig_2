@@ -25,7 +25,7 @@ iems490-assig-2/
 │  └─ lora_qwen3_0p6b_unit.yaml
 ├─ data/
 │  ├─ bias_clean.csv              # original full dataset
-│  ├─ processed_unit_test/        # very small data for unit test; same file names as below but fews examples.
+│  ├─ processed_unit_test/        # very small data for unit test; same file names as below but few examples.
 │  └─ processed/                  # this run: TRAIN capped to 1,200 (stratified after split); VAL = 1,382 and TEST = 1,625 (each ~15% of 10,832)
 │     ├─ train.jsonl
 │     ├─ val.jsonl
@@ -61,7 +61,7 @@ Labels normalized to `{left, center, right}`.
 - `eval_small.jsonl`: 15 unlabeled examples sampled from `test.jsonl` for qualitative inspection
 - `prep_meta.json`: metadata on counts, label balance, and any train downsampling
 
-Note: To keep training time reasonable, this run uses `--train_cap 1200`. The cap is applied **after** creating stratified splits across three labels, so it reduces **train only**. Validation and test stay at their full split sizes and do not overlap with train (**val = 1,382**, **test = 1,625**; full dataset size = **10,832**). This also ensure that the exact test questions were not used during fine-tuning.
+Note: To keep training time reasonable, this run uses `--train_cap 1200`. The cap is applied **after** creating stratified splits across three labels, so it reduces **train only**. Validation and test stay at their full split sizes and do not overlap with train (**val = 1,382**, **test = 1,625**; full dataset size = **10,832**). This also ensures that the exact test questions were not used during fine-tuning.
 
 ---
 
